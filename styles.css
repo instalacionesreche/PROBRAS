@@ -1,0 +1,480 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f5f5f5;
+    color: #333;
+    line-height: 1.6;
+}
+
+header {
+    background-color: #2c3e50;
+    color: white;
+    padding: 1rem;
+    text-align: center;
+}
+
+h1 {
+    margin-bottom: 1rem;
+    font-size: 1.8rem;
+}
+
+.menu {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.menu button {
+    background-color: #34495e;
+    color: white;
+    border: none;
+    padding: 0.6rem 1rem;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    transition: background-color 0.3s;
+}
+
+.menu button:hover {
+    background-color: #2980b9;
+}
+
+.menu button.active {
+    background-color: #3498db;
+}
+
+main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+.section {
+    display: none;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.section.active {
+    display: block;
+}
+
+h2 {
+    color: #2c3e50;
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid #ecf0f1;
+    padding-bottom: 0.5rem;
+}
+
+.form-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+}
+
+@media (min-width: 768px) {
+    .form-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #34495e;
+}
+
+.required-field {
+    color: #e74c3c;
+    font-weight: bold;
+    margin-left: 5px;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+}
+
+.help-text {
+    display: block;
+    font-size: 0.8rem;
+    color: #7f8c8d;
+    margin-top: 0.3rem;
+}
+
+.form-divider {
+    grid-column: 1 / -1;
+    margin: 1rem 0;
+    border-top: 1px solid #ecf0f1;
+    padding-top: 1rem;
+}
+
+.form-divider h3 {
+    font-size: 1.1rem;
+    color: #2c3e50;
+}
+
+.form-actions {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.btn-primary {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: #2980b9;
+}
+
+.btn-secondary {
+    background-color: #95a5a6;
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+}
+
+.btn-secondary:hover {
+    background-color: #7f8c8d;
+}
+
+.data-list {
+    margin-top: 2rem;
+    border-top: 2px solid #ecf0f1;
+    padding-top: 1rem;
+}
+
+.data-list h3 {
+    margin-bottom: 1rem;
+    color: #2c3e50;
+}
+
+.list-container {
+    max-height: 400px;
+    overflow-y: auto;
+    border: 1px solid #ecf0f1;
+    border-radius: 4px;
+}
+
+.list-item {
+    padding: 1rem;
+    border-bottom: 1px solid #ecf0f1;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.list-item:last-child {
+    border-bottom: none;
+}
+
+/* Style for items that function as labels/checklists */
+.liquidacion-item {
+    cursor: pointer;
+    background-color: #ffffff;
+    transition: background-color 0.2s;
+    /* Ensure the checkbox aligns nicely with text */
+    display: flex;
+    align-items: center;
+}
+
+.liquidacion-item:hover {
+    background-color: #f0f8ff; /* Light blue hint on hover */
+}
+
+.liquidacion-item input[type="checkbox"] {
+    margin-right: 1rem;
+    width: auto; /* Adjust checkbox width */
+}
+
+.list-item-info {
+    flex: 1;
+    margin-right: 1rem;
+}
+
+.list-item-info strong {
+    display: block;
+    margin-bottom: 0.2rem;
+}
+
+.list-item-actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-shrink: 0;
+    margin-top: 0.5rem;
+}
+
+@media (min-width: 768px) {
+    .list-item-actions {
+        margin-top: 0;
+    }
+}
+
+.btn-icon {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: #7f8c8d;
+    transition: color 0.3s;
+    padding: 0.2rem;
+}
+
+.btn-icon:hover {
+    color: #34495e;
+}
+
+.photos-preview, .photo-preview {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.photo-thumbnail {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+
+.photo-thumbnail-large {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin-top: 10px;
+    border: 1px solid #eee;
+    border-radius: 4px;
+}
+
+.filter-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    align-items: flex-end;
+}
+
+@media (max-width: 767px) {
+    .filter-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .filter-container .form-group {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+    .filter-container button {
+        width: 100%;
+    }
+}
+
+.resumen-container {
+    display: none;
+    margin-top: 2rem;
+}
+
+.resumen-info, .resumen-datos, .resumen-detalle {
+    margin-bottom: 2rem;
+}
+
+.resumen-info h3, .resumen-datos h3, .resumen-detalle h3 {
+    color: #2c3e50;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #ecf0f1;
+    padding-bottom: 0.5rem;
+}
+
+.visualizacion-partes {
+    margin-top: 2rem;
+}
+
+.visualizacion-parte {
+    border: 1px solid #ecf0f1;
+    border-radius: 4px;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    background-color: #fcfcfc;
+}
+
+.visualizacion-parte h4 {
+    margin-bottom: 0.8rem;
+    color: #34495e;
+    border-bottom: 1px dashed #ecf0f1;
+    padding-bottom: 0.5rem;
+}
+
+.visualizacion-parte p {
+    margin-bottom: 0.5rem;
+}
+
+.visualizacion-fotos, .visualizacion-gasto {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px dashed #ecf0f1;
+}
+
+.visualizacion-fotos h5, .visualizacion-gasto h5 {
+    margin-bottom: 0.8rem;
+    color: #555;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    overflow: auto;
+}
+
+.modal-content {
+    background-color: white;
+    margin: 5% auto;
+    padding: 2rem;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 1000px;
+    max-height: 80vh;
+    overflow-y: auto;
+    position: relative;
+}
+
+.close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #7f8c8d;
+    cursor: pointer;
+}
+
+.close:hover {
+    color: #34495e;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+table, th, td {
+    border: 1px solid #ecf0f1;
+}
+
+th, td {
+    padding: 0.75rem;
+    text-align: left;
+}
+
+th {
+    background-color: #f9f9f9;
+    font-weight: 600;
+}
+
+.detalle-fecha {
+    margin-top: 1rem;
+    padding: 1rem;
+    background-color: #f9f9f9;
+    border-radius: 4px;
+    border-left: 3px solid #3498db;
+    margin-bottom: 1.5rem;
+}
+
+/* Tabs styles for sectionPagos */
+.tabs-container {
+    margin-top: 1rem;
+}
+
+.tab-buttons {
+    display: flex;
+    border-bottom: 2px solid #ecf0f1;
+    margin-bottom: 1rem;
+}
+
+.tab-button {
+    background: none;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 1rem;
+    color: #7f8c8d;
+    border-bottom: 2px solid transparent;
+    transition: all 0.3s;
+}
+
+.tab-button.active {
+    color: #2c3e50;
+    border-bottom: 2px solid #3498db;
+    font-weight: bold;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.detalle-fecha h4 {
+    margin-bottom: 0.5rem;
+    color: #2c3e50;
+}
+
+.error-message {
+    color: #e74c3c;
+    font-size: 0.9rem;
+    margin-top: 0.3rem;
+}
+
+.success-message {
+    color: #27ae60;
+    font-size: 0.9rem;
+    margin-top: 0.3rem;
+}

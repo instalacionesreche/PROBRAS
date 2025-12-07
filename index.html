@@ -1,0 +1,567 @@
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Obras y Servicios</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Sistema de Gestión de Obras y Servicios</h1>
+        <div class="menu">
+            <button id="btnParteDiario" class="active">Parte Diario</button>
+            <button id="btnVerPartes">Ver Partes</button>
+            <button id="btnClientes">Clientes</button>
+            <button id="btnObras">Obras</button>
+            <button id="btnOperarios">Operarios</button>
+            <button id="btnProveedores">Proveedores</button>
+            <button id="btnResumen">Resumen</button>
+            <button id="btnLiquidacion">Liquidación</button>
+            <button id="btnPagos">Pagos</button>
+            <button id="btnBackup">Copia de Seguridad</button>
+            <button id="btnRestore">Restaurar Datos</button>
+            <button id="btnAyuda">Ayuda / Manual</button>
+        </div>
+    </header>
+
+    <main>
+        <!-- Bloque Parte Diario -->
+        <section id="sectionParteDiario" class="section active">
+            <h2>Nuevo Parte Diario</h2>
+            <div class="form-container">
+                <div class="form-group">
+                    <label for="fechaParte">Fecha <span class="required-field">*</span>:</label>
+                    <input type="date" id="fechaParte" required>
+                </div>
+                <div class="form-group">
+                    <label for="obraParte">Obra <span class="required-field">*</span>:</label>
+                    <select id="obraParte" required>
+                        <option value="">Seleccionar obra</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="operarioParte">Operario <span class="required-field">*</span>:</label>
+                    <select id="operarioParte" required>
+                        <option value="">Seleccionar operario</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="horasParte">Horas trabajadas <span class="required-field">*</span>:</label>
+                    <input type="number" id="horasParte" min="0" step="0.5" required>
+                </div>
+                <div class="form-group">
+                    <label for="descripcionParte">Descripción de la tarea <span class="required-field">*</span>:</label>
+                    <textarea id="descripcionParte" rows="4" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="fotosParte">Fotografías:</label>
+                    <input type="file" id="fotosParte" multiple accept="image/*">
+                    <div id="previewFotos" class="photos-preview"></div>
+                </div>
+
+                <div class="form-divider">
+                    <h3>Gastos en Proveedor (Opcional)</h3>
+                </div>
+                <div class="form-group">
+                    <label for="proveedorParte">Proveedor:</label>
+                    <select id="proveedorParte">
+                        <option value="">Ninguno</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="documentoGastoParte">Número de Documento:</label>
+                    <input type="text" id="documentoGastoParte">
+                </div>
+                <div class="form-group">
+                    <label for="operarioPagaParte">Operario que paga:</label>
+                    <select id="operarioPagaParte">
+                         <option value="">Nadie</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="gastoParte">Importe (€):</label>
+                    <input type="number" id="gastoParte" min="0" step="0.01">
+                </div>
+                <div class="form-group">
+                    <label for="fotoGasto">Foto del comprobante:</label>
+                    <input type="file" id="fotoGasto" accept="image/*">
+                    <div id="previewGasto" class="photo-preview"></div>
+                </div>
+
+                <div class="form-actions">
+                    <button id="guardarParte" class="btn-primary">Guardar Parte</button>
+                    <button id="limpiarParte" class="btn-secondary">Limpiar</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bloque Ver Partes -->
+        <section id="sectionVerPartes" class="section">
+            <h2>Partes Diarios Registrados</h2>
+            <div class="filter-container">
+                <div class="form-group">
+                    <label for="filtroObraVerPartes">Obra:</label>
+                    <select id="filtroObraVerPartes">
+                        <option value="">Todas las obras</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="filtroFechaVerPartes">Fecha:</label>
+                    <input type="date" id="filtroFechaVerPartes">
+                </div>
+                <div class="form-group">
+                    <label for="filtroOperarioVerPartes">Operario:</label>
+                    <select id="filtroOperarioVerPartes">
+                        <option value="">Todos los operarios</option>
+                    </select>
+                </div>
+                <button id="aplicarFiltroVerPartes" class="btn-secondary">Aplicar Filtro</button>
+                <button id="limpiarFiltroVerPartes" class="btn-secondary">Limpiar Filtro</button>
+            </div>
+            <div class="data-list">
+                <div id="listaPartesDiarios" class="list-container"></div>
+            </div>
+        </section>
+
+        <!-- Bloque Clientes -->
+        <section id="sectionClientes" class="section">
+            <h2>Gestión de Clientes</h2>
+            <div class="form-container">
+                <div class="form-group">
+                    <label for="nombreCliente">Nombre:</label>
+                    <input type="text" id="nombreCliente" required>
+                </div>
+                <div class="form-group">
+                    <label for="direccionCliente">Dirección:</label>
+                    <input type="text" id="direccionCliente">
+                </div>
+                <div class="form-group">
+                    <label for="poblacionCliente">Población:</label>
+                    <input type="text" id="poblacionCliente">
+                </div>
+                <div class="form-group">
+                    <label for="provinciaCliente">Provincia:</label>
+                    <input type="text" id="provinciaCliente">
+                </div>
+                <div class="form-group">
+                    <label for="tipoDocumento">Tipo de documento:</label>
+                    <select id="tipoDocumento">
+                        <option value="CIF">CIF</option>
+                        <option value="NIF">NIF</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="numeroDocumento">Número de documento:</label>
+                    <input type="text" id="numeroDocumento">
+                </div>
+                <div class="form-group">
+                    <label for="telefonoCliente">Teléfono:</label>
+                    <input type="tel" id="telefonoCliente">
+                </div>
+                <div class="form-group">
+                    <label for="emailCliente">Correo electrónico:</label>
+                    <input type="email" id="emailCliente">
+                </div>
+                <div class="form-actions">
+                    <button id="guardarCliente" class="btn-primary">Guardar Cliente</button>
+                    <button id="limpiarCliente" class="btn-secondary">Limpiar</button>
+                </div>
+            </div>
+            <div class="data-list">
+                <h3>Clientes Registrados</h3>
+                <div id="listaClientes" class="list-container"></div>
+            </div>
+        </section>
+
+        <!-- Bloque Obras -->
+        <section id="sectionObras" class="section">
+            <h2>Gestión de Obras</h2>
+            <div class="form-container">
+                <div class="form-group">
+                    <label for="clienteObra">Cliente:</label>
+                    <select id="clienteObra" required>
+                        <option value="">Seleccionar cliente</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="nombreObra">Nombre de la obra:</label>
+                    <input type="text" id="nombreObra" required>
+                </div>
+                <div class="form-group">
+                    <label for="presupuestoTotalObra">Presupuesto Total (€):</label>
+                    <input type="number" id="presupuestoTotalObra" min="0" step="0.01">
+                </div>
+                <div class="form-group">
+                    <label for="numeroObra">Número de obra:</label>
+                    <input type="text" id="numeroObra" readonly>
+                    <span class="help-text">Se asignará automáticamente</span>
+                </div>
+                <div class="form-actions">
+                    <button id="guardarObra" class="btn-primary">Guardar Obra</button>
+                    <button id="limpiarObra" class="btn-secondary">Limpiar</button>
+                </div>
+            </div>
+            <div class="data-list">
+                <h3>Obras Registradas</h3>
+                <div id="listaObras" class="list-container"></div>
+            </div>
+        </section>
+
+        <!-- Bloque Operarios -->
+        <section id="sectionOperarios" class="section">
+            <h2>Gestión de Operarios</h2>
+            <div class="form-container">
+                <div class="form-group">
+                    <label for="nombreOperario">Nombre:</label>
+                    <input type="text" id="nombreOperario" required>
+                </div>
+                <div class="form-group">
+                    <label for="direccionOperario">Dirección:</label>
+                    <input type="text" id="direccionOperario">
+                </div>
+                <div class="form-group">
+                    <label for="poblacionOperario">Población:</label>
+                    <input type="text" id="poblacionOperario">
+                </div>
+                <div class="form-group">
+                    <label for="provinciaOperario">Provincia:</label>
+                    <input type="text" id="provinciaOperario">
+                </div>
+                <div class="form-group">
+                    <label for="telefonoOperario">Teléfono:</label>
+                    <input type="tel" id="telefonoOperario">
+                </div>
+                <div class="form-group">
+                    <label for="emailOperario">Correo electrónico:</label>
+                    <input type="email" id="emailOperario">
+                </div>
+                <div class="form-actions">
+                    <button id="guardarOperario" class="btn-primary">Guardar Operario</button>
+                    <button id="limpiarOperario" class="btn-secondary">Limpiar</button>
+                </div>
+            </div>
+            <div class="data-list">
+                <h3>Operarios Registrados</h3>
+                <div id="listaOperarios" class="list-container"></div>
+            </div>
+        </section>
+
+        <!-- Bloque Proveedores -->
+        <section id="sectionProveedores" class="section">
+            <h2>Gestión de Proveedores</h2>
+            <div class="form-container">
+                <div class="form-group">
+                    <label for="nombreProveedor">Nombre:</label>
+                    <input type="text" id="nombreProveedor" required>
+                </div>
+                <div class="form-group">
+                    <label for="direccionProveedor">Dirección:</label>
+                    <input type="text" id="direccionProveedor">
+                </div>
+                <div class="form-group">
+                    <label for="poblacionProveedor">Población:</label>
+                    <input type="text" id="poblacionProveedor">
+                </div>
+                <div class="form-group">
+                    <label for="provinciaProveedor">Provincia:</label>
+                    <input type="text" id="provinciaProveedor">
+                </div>
+                <div class="form-group">
+                    <label for="tipoDocumentoProveedor">Tipo de documento:</label>
+                    <select id="tipoDocumentoProveedor">
+                        <option value="CIF">CIF</option>
+                        <option value="NIF">NIF</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="numeroDocumentoProveedor">Número de documento:</label>
+                    <input type="text" id="numeroDocumentoProveedor">
+                </div>
+                <div class="form-group">
+                    <label for="telefonoProveedor">Teléfono:</label>
+                    <input type="tel" id="telefonoProveedor">
+                </div>
+                <div class="form-group">
+                    <label for="emailProveedor">Correo electrónico:</label>
+                    <input type="email" id="emailProveedor">
+                </div>
+                <div class="form-actions">
+                    <button id="guardarProveedor" class="btn-primary">Guardar Proveedor</button>
+                    <button id="limpiarProveedor" class="btn-secondary">Limpiar</button>
+                </div>
+            </div>
+            <div class="data-list">
+                <h3>Proveedores Registrados</h3>
+                <div id="listaProveedores" class="list-container"></div>
+            </div>
+        </section>
+
+        <!-- Bloque Resumen -->
+        <section id="sectionResumen" class="section">
+            <h2>Resumen de Obras</h2>
+            <div class="filter-container">
+                <div class="form-group">
+                    <label for="clienteResumen">Cliente:</label>
+                    <select id="clienteResumen">
+                        <option value="">Seleccionar cliente</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="obraResumen">Obra:</label>
+                    <select id="obraResumen">
+                        <option value="">Seleccionar obra</option>
+                    </select>
+                </div>
+                <button id="generarResumen" class="btn-primary">Generar Resumen</button>
+            </div>
+            
+            <div id="contenidoResumen" class="resumen-container">
+                <div class="resumen-info">
+                    <h3>Información de la Obra</h3>
+                    <div id="infoObra"></div>
+                </div>
+                
+                <div class="resumen-datos">
+                    <h3>Resumen de Horas y Gastos</h3>
+                    <div id="resumenHoras"></div>
+                    <div id="resumenGastos"></div>
+                    <div id="resumenPagosAcuenta"></div>
+                    <div id="resumenTotal"></div>
+                </div>
+                
+                <div class="resumen-detalle">
+                    <h3>Detalles por Fecha</h3>
+                    <div id="detallePartes"></div>
+                </div>
+                
+                <div class="form-actions">
+                    <button id="imprimirResumen" class="btn-primary">Imprimir PDF</button>
+                    <button id="visualizarCompleto" class="btn-secondary">Visualizar Todo</button>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Bloque Liquidación -->
+        <section id="sectionLiquidacion" class="section">
+            <h2>Liquidación de Días Trabajados por Operario</h2>
+            <div class="form-container" style="grid-template-columns: 1fr;">
+                <div class="form-group">
+                    <label for="operarioLiquidacion">Seleccionar Operario:</label>
+                    <select id="operarioLiquidacion" required>
+                        <option value="">Seleccionar operario</option>
+                    </select>
+                </div>
+                
+                <div class="form-divider">
+                    <h3>Días Pendientes de Liquidar (Total seleccionados: <span id="totalDiasSeleccionados">0</span>)</h3>
+                    <p class="help-text">Seleccione los días que desea liquidar. Incluye todos los partes de ese día.</p>
+                </div>
+                
+                <div id="listaDiasLiquidacion" class="data-list" style="margin-top: 0;">
+                    <!-- Lista de días trabajados no liquidados -->
+                </div>
+                
+                <div class="form-divider">
+                    <h3>Nota de Liquidación (Opcional)</h3>
+                </div>
+                <div class="form-group">
+                    <label for="notaLiquidacion">Nota/Recordatorio de Pago:</label>
+                    <textarea id="notaLiquidacion" rows="2"></textarea>
+                </div>
+
+                <div class="form-actions">
+                    <button id="guardarLiquidacion" class="btn-primary" disabled>Confirmar Liquidación</button>
+                    <button id="verLiquidaciones" class="btn-secondary">Ver Liquidaciones</button> 
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="visualizacionCompleta" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Visualización Completa</h2>
+            <div id="contenidoCompleto"></div>
+        </div>
+    </div>
+        
+    <!-- Bloque Modal para visualización de Liquidaciones -->
+    <div id="visualizacionLiquidaciones" class="modal">
+        <div class="modal-content">
+            <span class="close-liquidaciones">&times;</span>
+            <h2>Liquidaciones Históricas</h2>
+            
+            <div class="filter-container">
+                <div class="form-group">
+                    <label for="filtroOperarioLiquidado">Operario:</label>
+                    <select id="filtroOperarioLiquidado">
+                        <option value="">Todos los operarios</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="filtroFechaInicioLiquidado">Desde Fecha de Liquidación:</label>
+                    <input type="date" id="filtroFechaInicioLiquidado">
+                </div>
+                 <div class="form-group">
+                    <label for="filtroFechaFinLiquidado">Hasta Fecha de Liquidación:</label>
+                    <input type="date" id="filtroFechaFinLiquidado">
+                </div>
+                <button id="aplicarFiltroLiquidado" class="btn-secondary">Aplicar Filtro</button>
+                <button id="limpiarFiltroLiquidado" class="btn-secondary">Limpiar Filtro</button>
+            </div>
+            
+            <div id="listaLiquidacionesHistoricas" class="data-list">
+                <!-- Contenido de liquidaciones -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- Bloque Pagos -->
+    <section id="sectionPagos" class="section">
+        <h2>Gestión de Pagos</h2>
+        
+        <div class="tabs-container">
+            <div class="tab-buttons">
+                <button class="tab-button active" data-target="tabPagosAcuenta">Pagos a Cuenta (Obras)</button>
+                <button class="tab-button" data-target="tabPagosPB">Gastos Generales (PB)</button>
+                <button class="tab-button" data-target="tabResumenPagos">Resumen de Pagos</button>
+            </div>
+            
+            <div class="tab-content active" id="tabPagosAcuenta">
+                <h3>Registro de Pagos a Cuenta de Obra</h3>
+                <div class="form-container" style="grid-template-columns: repeat(3, 1fr);">
+                    <div class="form-group">
+                        <label for="obraPagoAcuenta">Obra:</label>
+                        <select id="obraPagoAcuenta" required>
+                            <option value="">Seleccionar obra</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="fechaPagoAcuenta">Fecha de Pago:</label>
+                        <input type="date" id="fechaPagoAcuenta" required>
+                    </div>
+                     <div class="form-group">
+                        <label for="montoPagoAcuenta">Monto (€):</label>
+                        <input type="number" id="montoPagoAcuenta" min="0" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="documentoPagoAcuenta">Número de Documento:</label>
+                        <input type="text" id="documentoPagoAcuenta">
+                    </div>
+                    <div class="form-actions" style="grid-column: 1 / -1; justify-content: flex-start;">
+                        <button id="guardarPagoAcuenta" class="btn-primary">Registrar Pago a Cuenta</button>
+                    </div>
+                </div>
+                
+                <div class="filter-container" style="margin-bottom: 1rem; padding-top: 0;">
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label for="filtroObraPagosAcuenta">Filtrar por Obra:</label>
+                        <select id="filtroObraPagosAcuenta" onchange="actualizarListaPagosAcuenta()">
+                            <option value="">Todas las obras</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="data-list" style="margin-top: 0rem;">
+                    <h4>Historial de Pagos a Cuenta</h4>
+                    <div id="listaPagosAcuenta" class="list-container"></div>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="tabPagosPB">
+                 <h3>Registro de Gastos Generales (PB)</h3>
+                 <div class="form-container" style="grid-template-columns: repeat(2, 1fr);">
+                    <div class="form-group">
+                        <label for="fechaPagoPB">Fecha:</label>
+                        <input type="date" id="fechaPagoPB" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="precioPagoPB">Precio (€):</label>
+                        <input type="number" id="precioPagoPB" min="0" step="0.01" required>
+                    </div>
+                    <div class="form-group" style="grid-column: 1 / -1;">
+                        <label for="conceptoPagoPB">Concepto:</label>
+                        <textarea id="conceptoPagoPB" rows="2" required></textarea>
+                    </div>
+                    <div class="form-actions" style="grid-column: 1 / -1; justify-content: flex-start;">
+                        <button id="guardarPagoPB" class="btn-primary">Registrar Gasto PB</button>
+                    </div>
+                </div>
+                
+                <div class="filter-container" style="margin-top: 2rem; border-top: 1px solid #ecf0f1; padding-top: 1rem;">
+                    <div class="form-group">
+                        <label for="filtroFechaInicioPB">Desde Fecha:</label>
+                        <input type="date" id="filtroFechaInicioPB">
+                    </div>
+                    <div class="form-group">
+                        <label for="filtroFechaFinPB">Hasta Fecha:</label>
+                        <input type="date" id="filtroFechaFinPB">
+                    </div>
+                    <button id="mostrarResumenPB" class="btn-secondary">Mostrar Resumen PB</button>
+                    <button id="limpiarFiltroPB" class="btn-secondary">Limpiar Filtro</button>
+                </div>
+
+                <div id="resumenTotalesPB" style="margin-bottom: 1rem;">
+                    <!-- Totales del filtro PB se mostrarán aquí -->
+                </div>
+                
+                <div class="data-list" style="margin-top: 1rem;">
+                    <h4>Historial de Gastos Generales (PB)</h4>
+                    <div id="listaPagosPB" class="list-container"></div>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="tabResumenPagos">
+                <h3>Resumen Total de Pagos Registrados</h3>
+                <div class="resumen-container" style="display: block;">
+                    <div id="resumenTotalesPagos"></div>
+                    
+                    <div class="data-list">
+                        <h4>Detalle Completo</h4>
+                        <div id="listaTodosLosPagos" class="list-container"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Bloque Ayuda / Manual -->
+    <section id="sectionAyuda" class="section">
+        <h2>Ayuda y Gestión de Datos Local</h2>
+        <div class="form-container" style="grid-template-columns: 1fr; max-width: 800px;">
+            <h3>Funcionamiento Local de la Aplicación (Electron)</h3>
+            <p>Esta aplicación está diseñada para funcionar en modo local utilizando Electron (una tecnología que combina Node.js y Chromium). Esto significa que sus datos se almacenan de forma segura y **aislada** en su equipo local (en la memoria de su perfil de aplicación Electron), y no en la nube.</p>
+            
+            <h3>Prevención de Pérdida de Datos Importante</h3>
+            <p style="font-weight: bold; color: #e74c3c;">⚠️ ¡Aviso Importante!</p>
+            <p>Aunque sus datos se guardan automáticamente, si desinstala la aplicación o si su perfil de usuario de Windows/Mac se corrompe, podría perder toda su información.</p>
+            
+            <p>Por esta razón, es CRUCIAL que utilice las funciones de <strong>Copia de Seguridad</strong> y <strong>Restaurar Datos</strong> (disponibles en el menú superior o en la barra de navegación).</p>
+            
+            <div class="form-divider">
+                <h4>Proceso de Copia de Seguridad</h4>
+            </div>
+            <ol>
+                <li>Haga clic en el botón <strong>Copia de Seguridad</strong>.</li>
+                <li>Se descargará un archivo llamado <code>backup_gestion_obras_YYYY-MM-DD.json</code>.</li>
+                <li>Guarde este archivo en una ubicación segura (como una carpeta de documentos o un disco externo).</li>
+                <li>Recomendamos realizar una copia de seguridad al menos una vez por semana o después de ingresar muchos datos nuevos.</li>
+            </ol>
+            
+            <div class="form-divider">
+                <h4>Restaurar Datos</h4>
+            </div>
+            <p>Si necesita restaurar sus datos (por ejemplo, al instalar la aplicación en un nuevo equipo), haga clic en <strong>Restaurar Datos</strong> y seleccione el archivo <code>.json</code> de su copia de seguridad.</p>
+            
+            <p><strong>Nota sobre navegadores:</strong> Esta aplicación no se ejecuta en su navegador web normal de Internet (Chrome, Firefox, Edge). Al usar la aplicación Electron, sus datos están completamente separados y son persistentes en el entorno local de la aplicación.</p>
+
+        </div>
+    </section>
+
+    <script>window.jspdf = window.jspdf || {};</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.16/jspdf.plugin.autotable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
